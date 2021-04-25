@@ -14,6 +14,14 @@ const updateGridOnClick = (grid, rowIndex, columnIndex) =>
     });
   });
 
+const resetCells = (grid, resetCoordinates) => {
+  const newGrid = JSON.parse(JSON.stringify(grid)); // Quick way to create a deep copy of a grid
+  resetCoordinates.forEach((coordinate) => {
+    newGrid[coordinate[0]][coordinate[1]] = null;
+  });
+  return newGrid;
+};
+
 function App() {
   const [grid, setGrid] = useState(defaultGrid);
 
@@ -26,9 +34,22 @@ function App() {
     [grid]
   );
 
+  const handleCellsReset = useCallback(
+    (coordinates) => {
+      let newGrid = resetCells(grid, coordinates);
+
+      setGrid(newGrid);
+    },
+    [grid]
+  );
+
   return (
     <div className="App">
-      <Grid grid={grid} onCellClick={handleCellClick} />
+      <Grid
+        grid={grid}
+        resetCells={handleCellsReset}
+        onCellClick={handleCellClick}
+      />
     </div>
   );
 }

@@ -1,23 +1,6 @@
 import React, { useEffect } from "react";
 import { Cell } from "./Cell";
-
-const detectFibonacciSequence = (row, rowIndex) => {
-  const coordinates = [];
-  let fibCount = 0;
-  for (let i = 2; i < row.length; i++) {
-    if (row[i - 1] + row[i - 2] === row[i]) {
-      fibCount++;
-    } else {
-      if (fibCount >= 3) {
-        for (let j = i - fibCount - 2; j < i; j++) {
-          coordinates.push([rowIndex, j]);
-        }
-      }
-      fibCount = 0;
-    }
-  }
-  return coordinates;
-};
+import { detectFibonacciSequence } from "../utils/detectFibonacciSequence";
 
 export const Row = ({ row, rowIndex, onCellClick, resetCells }) => {
   useEffect(() => {

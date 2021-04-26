@@ -1,6 +1,7 @@
 import { transposeArray } from "./transposeArray";
 
 export const MIN_DETECT_SIZE = 3;
+export const MIN_RESET_SEQUENCE_SIZE = 5;
 
 export const detectFibonacciSequence = (row, rowIndex) => {
   const coordinates = [];
@@ -27,7 +28,7 @@ export const getFibonacciSequenceInColumns = (grid) => {
   transposedGrid.forEach((row, rowIndex) => {
     const transposedCoordinates = detectFibonacciSequence(row, rowIndex);
 
-    if (transposedCoordinates.length >= 4) {
+    if (transposedCoordinates.length >= MIN_RESET_SEQUENCE_SIZE) {
       const columnCoordinates = transposedCoordinates.map((coord) => [
         coord[1],
         coord[0],
@@ -44,7 +45,7 @@ export const getFibonacciSequenceInRows = (grid) => {
 
   grid.forEach((row, rowIndex) => {
     const rowCoordinates = detectFibonacciSequence(row, rowIndex);
-    if (rowCoordinates.length >= 4) {
+    if (rowCoordinates.length >= MIN_RESET_SEQUENCE_SIZE) {
       coordinates = coordinates.concat(rowCoordinates);
     }
   });

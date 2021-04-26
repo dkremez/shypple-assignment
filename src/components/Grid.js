@@ -1,5 +1,6 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { Row } from "./Row";
+import { getFibonacciCells } from "../utils/getFibonacciCells";
 
 const defaultGrid = new Array(50).fill(new Array(50).fill());
 
@@ -13,7 +14,7 @@ const updateGridOnClick = (grid, rowIndex, columnIndex) =>
     });
   });
 
-const resetCells = (grid, resetCoordinates) => {
+const resetGridCells = (grid, resetCoordinates) => {
   const newGrid = JSON.parse(JSON.stringify(grid)); // Quick way to create a deep copy of a grid
   resetCoordinates.forEach((coordinate) => {
     newGrid[coordinate[0]][coordinate[1]] = null;
@@ -35,12 +36,17 @@ export const Grid = () => {
 
   const handleCellsReset = useCallback(
     (coordinates) => {
-      let newGrid = resetCells(grid, coordinates);
+      let newGrid = resetGridCells(grid, coordinates);
 
       setGrid(newGrid);
     },
     [grid]
   );
+
+  useEffect(() => {
+    let cells = getFibonacciCells(grid);
+    if (cells.length) handleCellsReset(cells);
+  }, [grid, handleCellsReset]);
 
   return (
     <div className="grid">
@@ -49,7 +55,6 @@ export const Grid = () => {
           key={rowIndex}
           row={row}
           rowIndex={rowIndex}
-          resetCells={handleCellsReset}
           onCellClick={handleCellClick}
         />
       ))}

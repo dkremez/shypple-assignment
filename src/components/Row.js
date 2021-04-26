@@ -1,16 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Cell } from "./Cell";
-import { detectFibonacciSequence } from "../utils/detectFibonacciSequence";
 
-export const Row = ({ row, rowIndex, onCellClick, resetCells }) => {
-  useEffect(() => {
-    const fibSequenceCoordinates = detectFibonacciSequence(row, rowIndex);
-
-    if (fibSequenceCoordinates.length >= 4) {
-      resetCells(fibSequenceCoordinates);
-    }
-  }, [row, rowIndex, resetCells]);
-
+export const Row = ({ row, rowIndex, onCellClick }) => {
   return (
     <div className="row">
       {row.map((cell, columnIndex) => (

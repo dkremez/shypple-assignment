@@ -3,11 +3,24 @@ import { transposeArray } from "./transposeArray";
 export const MIN_DETECT_SIZE = 3;
 export const MIN_RESET_SEQUENCE_SIZE = 5;
 
+export const isPerfectSquare = (x) => {
+  let s = parseInt(Math.sqrt(x));
+  return s * s == x;
+};
+
+export const isFibonacci = (n) => {
+  return isPerfectSquare(5 * n * n + 4) || isPerfectSquare(5 * n * n - 4);
+};
+
 export const detectFibonacciSequence = (row, rowIndex) => {
   const coordinates = [];
   let fibCount = 0;
   for (let i = 2; i < row.length; i++) {
-    if (row[i - 1] + row[i - 2] === row[i]) {
+    if (
+      row[i - 2] + row[i - 1] === row[i] &&
+      isFibonacci(row[i - 2]) &&
+      isFibonacci(row[i - 1])
+    ) {
       fibCount++;
     } else {
       if (fibCount >= MIN_DETECT_SIZE) {

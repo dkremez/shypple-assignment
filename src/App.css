@@ -19,13 +19,30 @@
   border: 1px dashed grey;
 }
 
-.cell--clicked {
-  background-color: yellow;
-  border: 1px solid yellow;
-  transition: border background-color 1s;
+.cell:active {
+  animation: highlight 1000ms ease-out;
 }
 
-.cell--reseted {
-  background-color: green;
-  transition: border background-color 1s;
+@keyframes highlight {
+  0% {
+    background-color: yellow;
+    border: 1px solid yellow;
+  }
+  100% {
+    background-color: white;
+    border: 1px dashed grey;
+  }
+}
+
+.cell:empty {
+  animation: reset 1000ms ease-out;
+}
+
+@keyframes reset {
+  0% {
+    background-color: green;
+  }
+  100% {
+    background-color: white;
+  }
 }

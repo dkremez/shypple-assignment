@@ -1,37 +1,21 @@
-import React, { useState, useEffect } from "react";
-import classnames from "classnames";
-import { usePrevious } from "../hooks/usePrevious";
+import React, { useCallback, memo } from "react";
 
-export const Cell = ({ cell, rowIndex, columnIndex, onClick }) => {
-  const [clicked, setClicked] = useState(false);
-  const [reseted, setReseted] = useState(false);
-  const prevCell = usePrevious(cell);
+const areEqual = (prevProps, newProps) => {
+  return (
+    prevProps.cell === newProps.cell &&
+    prevProps.rowIndex === newProps.rowIndex &&
+    prevProps.onClick === newProps.columnIndex
+  );
+};
 
-  useEffect(() => {
-    if (prevCell && !cell) {
-      setReseted(true);
-      setTimeout(() => {
-        setReseted(false);
-      }, 1000);
-    }
-  }, [cell, prevCell]);
-
-  const handleClick = () => {
-    setClicked(true);
+export const Cell = memo(({ cell, rowIndex, columnIndex, onClick }) => {
+  const handleClick = useCallback(() => {
     onClick(rowIndex, columnIndex);
-    setTimeout(() => {
-      setClicked(false);
-    }, 1000);
-  };
-
-  const cellClassName = classnames("cell", {
-    "cell--clicked": clicked,
-    "cell--reseted": reseted,
-  });
+  }, [rowIndex, columnIndex, onClick]);
 
   return (
-    <div className={cellClassName} onClick={handleClick}>
+    <div className="cell" onClick={handleClick}>
       {cell}
     </div>
   );
-};
+}, areEqual);

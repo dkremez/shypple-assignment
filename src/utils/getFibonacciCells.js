@@ -5,7 +5,7 @@ export const MIN_RESET_SEQUENCE_SIZE = 5;
 
 export const isPerfectSquare = (x) => {
   let s = parseInt(Math.sqrt(x));
-  return s * s == x;
+  return s * s === x;
 };
 
 export const isFibonacci = (n) => {
